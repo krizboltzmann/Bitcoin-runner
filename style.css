@@ -1,0 +1,379 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background: linear-gradient(to bottom, #0a0e1a 0%, #1a1f35 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #fff;
+}
+
+.game-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    height: 100vh;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==================== HUD ==================== */
+.hud {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 10;
+}
+
+.hud-left,
+.hud-right {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.stat {
+    background: rgba(10, 14, 26, 0.9);
+    border: 2px solid #f7931a;
+    border-radius: 8px;
+    padding: 8px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 15px rgba(247, 147, 26, 0.3);
+    pointer-events: none;
+}
+
+.stat .label {
+    font-size: 11px;
+    color: #f7931a;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.stat .value {
+    font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Mute Button */
+.mute-btn {
+    background: rgba(10, 14, 26, 0.9);
+    border: 2px solid #f7931a;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(247, 147, 26, 0.3);
+    pointer-events: all;
+}
+
+.mute-btn:hover {
+    background: rgba(247, 147, 26, 0.2);
+    transform: scale(1.05);
+}
+
+.mute-btn:active {
+    transform: scale(0.95);
+}
+
+.mute-btn.muted {
+    border-color: #666;
+    box-shadow: 0 0 10px rgba(102, 102, 102, 0.3);
+}
+
+/* ==================== CANVAS ==================== */
+#gameCanvas {
+    background: #0f1624;
+    border: 3px solid #f7931a;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(247, 147, 26, 0.4);
+    display: block;
+    max-width: 100%;
+    max-height: calc(100vh - 100px);
+}
+
+/* ==================== OVERLAYS ==================== */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.92);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+}
+
+.overlay.hidden {
+    display: none;
+}
+
+.overlay-content {
+    text-align: center;
+    padding: 40px;
+    background: rgba(15, 22, 36, 0.95);
+    border: 3px solid #f7931a;
+    border-radius: 15px;
+    box-shadow: 0 0 40px rgba(247, 147, 26, 0.5);
+    max-width: 90%;
+}
+
+/* ==================== TITLES ==================== */
+.title {
+    font-size: 48px;
+    color: #f7931a;
+    text-shadow: 0 0 20px rgba(247, 147, 26, 0.8);
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+.paused-title {
+    color: #00ff88;
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.8);
+    font-size: 56px;
+}
+
+.game-over-title {
+    color: #ff4444;
+    text-shadow: 0 0 20px rgba(255, 68, 68, 0.8);
+}
+
+.subtitle {
+    font-size: 20px;
+    color: #aaa;
+    margin-bottom: 30px;
+}
+
+/* ==================== INSTRUCTIONS ==================== */
+.start-instructions {
+    margin-top: 20px;
+}
+
+.key-instruction {
+    font-size: 24px;
+    margin: 20px 0;
+    color: #fff;
+}
+
+.pause-instruction,
+.restart-instruction {
+    font-size: 20px;
+    margin: 20px 0;
+    color: #fff;
+}
+
+.key {
+    display: inline-block;
+    background: linear-gradient(135deg, #f7931a 0%, #ff8c00 100%);
+    color: #000;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 22px;
+    box-shadow: 0 4px 15px rgba(247, 147, 26, 0.4);
+    margin: 0 5px;
+}
+
+.key-small {
+    display: inline-block;
+    background: linear-gradient(135deg, #f7931a 0%, #ff8c00 100%);
+    color: #000;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 10px rgba(247, 147, 26, 0.3);
+    margin: 0 3px;
+}
+
+.game-info {
+    margin-top: 25px;
+    line-height: 2;
+}
+
+.game-info p {
+    font-size: 16px;
+    color: #ccc;
+}
+
+/* ==================== FINAL STATS ==================== */
+.final-stats {
+    margin: 25px 0;
+}
+
+.final-stats p {
+    font-size: 22px;
+    margin: 12px 0;
+    color: #fff;
+}
+
+.highlight {
+    color: #f7931a;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* ==================== CONTROLS HINT ==================== */
+.controls-hint {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 14, 26, 0.8);
+    border: 2px solid #f7931a;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 13px;
+    color: #f7931a;
+    z-index: 5;
+    white-space: nowrap;
+}
+
+.control-item {
+    margin: 0 8px;
+}
+
+.control-separator {
+    color: #f7931a;
+    margin: 0 5px;
+    opacity: 0.5;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .title {
+        font-size: 36px;
+    }
+    
+    .paused-title {
+        font-size: 44px;
+    }
+    
+    .subtitle {
+        font-size: 16px;
+    }
+    
+    .key-instruction,
+    .pause-instruction,
+    .restart-instruction {
+        font-size: 18px;
+    }
+    
+    .key {
+        font-size: 18px;
+        padding: 6px 16px;
+    }
+    
+    .game-info p {
+        font-size: 14px;
+    }
+    
+    .stat {
+        padding: 6px 12px;
+    }
+    
+    .stat .label {
+        font-size: 10px;
+    }
+    
+    .stat .value {
+        font-size: 16px;
+    }
+    
+    .mute-btn {
+        padding: 6px 10px;
+        font-size: 18px;
+    }
+    
+    .hud {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+    }
+    
+    .hud-left,
+    .hud-right {
+        gap: 8px;
+    }
+    
+    .controls-hint {
+        font-size: 11px;
+        padding: 8px 15px;
+    }
+    
+    .control-item {
+        margin: 0 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 28px;
+    }
+    
+    .paused-title {
+        font-size: 36px;
+    }
+    
+    .overlay-content {
+        padding: 25px;
+    }
+    
+    .final-stats p {
+        font-size: 18px;
+    }
+    
+    .highlight {
+        font-size: 24px;
+    }
+    
+    .controls-hint {
+        font-size: 9px;
+        padding: 6px 10px;
+        bottom: 10px;
+    }
+    
+    .control-separator {
+        display: none;
+    }
+}
+
+@media (max-height: 500px) {
+    .overlay-content {
+        padding: 20px;
+    }
+    
+    .title {
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+    
+    .game-info {
+        margin-top: 15px;
+    }
+    
+    .final-stats {
+        margin: 15px 0;
+    }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Bitcoin Runner - Endless Crypto Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-wrapper">
+        <!-- HUD -->
+        <div class="hud" id="hud">
+            <div class="hud-left">
+                <div class="stat">
+                    <span class="label">₿ BTC</span>
+                    <span id="score" class="value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="label">LIVES</span>
+                    <span id="lives" class="value">❤️❤️❤️</span>
+                </div>
+            </div>
+            <div class="hud-right">
+                <div class="stat">
+                    <span class="label">DISTANCE</span>
+                    <span id="distance" class="value">0m</span>
+                </div>
+                <button id="muteBtn" class="mute-btn" title="Toggle Sound">
+                    <span id="muteIcon">🔊</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Start Screen -->
+        <div id="startScreen" class="overlay">
+            <div class="overlay-content">
+                <h1 class="title">BITCOIN RUNNER</h1>
+                <div class="subtitle">Collect ₿ • Avoid Obstacles</div>
+                <div class="start-instructions">
+                    <p class="key-instruction">Press <span class="key">SPACE</span> to Start</p>
+                    <div class="game-info">
+                        <p>🎯 Collect Bitcoin coins for points</p>
+                        <p>💣 Avoid bombs to survive</p>
+                        <p>⏸️ Press <span class="key-small">ESC</span> to pause</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paused Screen -->
+        <div id="pausedScreen" class="overlay hidden">
+            <div class="overlay-content">
+                <h1 class="title paused-title">⏸ PAUSED</h1>
+                <p class="pause-instruction">Press <span class="key">ESC</span> to Resume</p>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameOverScreen" class="overlay hidden">
+            <div class="overlay-content">
+                <h1 class="title game-over-title">GAME OVER</h1>
+                <div class="final-stats">
+                    <p>Final Score: <span id="finalScore" class="highlight">0</span> ₿</p>
+                    <p>Distance: <span id="finalDistance" class="highlight">0m</span></p>
+                </div>
+                <p class="restart-instruction">Press <span class="key">SPACE</span> to Play Again</p>
+            </div>
+        </div>
+
+        <!-- Controls Hint -->
+        <div class="controls-hint">
+            <span class="control-item">SPACE: Jump</span>
+            <span class="control-separator">•</span>
+            <span class="control-item">ESC: Pause</span>
+            <span class="control-separator">•</span>
+            <span class="control-item">TAP: Jump</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
