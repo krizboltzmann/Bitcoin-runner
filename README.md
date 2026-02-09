@@ -3,7 +3,7 @@
 ## Live Demo
 
 🎮 Play the game here:  
-👉 **[PASTE YOUR GITHUB PAGES LINK]**
+👉 (https://krizboltzmann.github.io/Bitcoin-runner/)
 
 
 A browser-based endless runner game inspired by the Chrome offline dinosaur game — rebuilt with a crypto twist.
